@@ -1,0 +1,26 @@
+{
+  "name": "guild-hall",
+  "version": "1.0.0",
+  "description": "rp chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taelkir/guild-hall.git"
+  },
+  "author": "Tom Stanley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taelkir/guild-hall/issues"
+  },
+  "homepage": "https://github.com/taelkir/guild-hall#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "pug": "^2.0.3"
+  }
+}
