@@ -3,10 +3,9 @@ extends layout.pug
 block content
   
   main
-    h2 Welcome, roleplayer!
+    h2 Hello, #{locals.character}!
     div 
-      form(action="/", method="post")
-        label Please enter character name:
-          input(type="text", name="character-name")
-        button(type="submit") Submit
-  script(src="/client-app.js")
+      ul(id="messages")
+        form(action="")
+          input(id="m" autocomplete="off")
+          button Send
