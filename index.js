@@ -25,13 +25,11 @@ app.get('/chat', (req, res) => {
 
 // React to post requests coming in
 app.post('/', (req, res) => {
-  console.dir(`Coming from /index: ${req.body}`);
   res.cookie("character", req.body.character);
   return res.redirect("/chat");
 });
 
 app.post('/chat', (req, res) => {
-  console.dir(`Coming from /chat: ${req.body}`);
   res.cookie("character", req.body.character);
   return res.redirect("/chat");
 });
