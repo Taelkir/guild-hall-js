@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require('express');
+const app = express();
 const http = require('http').Server(app);
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -6,6 +7,7 @@ const cookieParser = require("cookie-parser");
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(express.static('static'))
 
 app.set('view engine', 'pug');
 

@@ -6,6 +6,6 @@ block content
     h2 Hello, #{locals.character}!
     div 
       ul(id="messages")
-        form(action="")
-          input(id="m" autocomplete="off")
-          button Send
+        form.socket(action="")
+          input.socket(id="m" autocomplete="off")
+          button.socket Send
