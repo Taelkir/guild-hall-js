@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/taelkir/guild-hall#readme",
   "devDependencies": {
-    "gulp": "^4.0.0"
+    "browser-sync": "^2.24.6",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglifycss": "^1.1.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

@@ -1,9 +1,12 @@
+// Requires
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+// Variables
+const port = process.env.port || 3000;
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -36,20 +39,19 @@ app.post('/chat', (req, res) => {
   return res.redirect("/chat");
 });
 
-
-
 // Load up the server
-app.listen(1337, () => {
-  console.log("Server is running.")
+app.listen(port, () => {
+  console.log(`Server is running on ${port}.`)
 });
 
 
 /* Notes / TODO
 **
-** Serve a page that sends post requests to the server
+** Login to a single chat area
 **
-** Server renders the text and a link to an icon and passes it back
-**
+** Create characters
+**  Store name in database
+**  Store url to icon in database
 ** https://socket.io/get-started/chat/ socket probably a good package for then showing it to other users
 **
 ** Cannibalise this? https://socket.io/get-started/chat/

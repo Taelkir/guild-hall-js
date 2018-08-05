@@ -1,0 +1,19 @@
+@import "variables";
+@import "layout";
+@import "socket-io";
+
+body {
+  background-color: blanchedalmond;
+}
+
+header {
+  border-bottom: 1px solid black;
+}
+
+footer {
+  background-color: $footer-background-colour;
+  color: white;
+  a {
+    color: white;
+  }
+}
