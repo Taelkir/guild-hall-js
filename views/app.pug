@@ -7,6 +7,9 @@ block content
     div 
       ul(id="messages")
         form.socket(action="")
-          input.socket(id="m" autocomplete="off")
+          input.socket(id="messageInput" autocomplete="off")
           button.socket Send
-  script(src="js/client-app.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js")
+  script(src="https://code.jquery.com/jquery-1.11.1.js")
+  script(src="js/chatsocket.js")
+          

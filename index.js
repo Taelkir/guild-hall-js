@@ -4,9 +4,10 @@ const app = express();
 const http = require('http').Server(app);
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const io = require("socket.io")(http);
 
 // Variables
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -14,34 +15,44 @@ app.use(express.static('static'))
 
 app.set('view engine', 'pug');
 
-// Serve a page
+// GET homepage
 app.get('/', (req, res) => {
   res.render("login");
 });
 
+// POST login from homepage
+app.post('/', (req, res) => {
+  res.cookie("character", req.body.character);
+  return res.redirect("/chat");
+});
+
+// GET chat page
 app.get('/chat', (req, res) => {
   if (req.cookies.character) {
     const locals = { "character": req.cookies.character };
+    // socket.io conenction
     return res.render("app", locals);
   } else {
     return res.redirect("/");
   }
 });
 
-// React to post requests coming in
-app.post('/', (req, res) => {
-  res.cookie("character", req.body.character);
-  return res.redirect("/chat");
-});
+io.on('connection', function(socket){
+  // Connect / Disconnect logs
+  console.log('a user connected');
+  socket.on("disconnect", function(){
+    console.log("user disconnected");
+  });
+  // Message handling
+  socket.on("chat message", (msg) => {
+    console.log(`Message: ${msg}`)
+  })
 
-app.post('/chat', (req, res) => {
-  res.cookie("character", req.body.character);
-  return res.redirect("/chat");
 });
 
 // Load up the server
-app.listen(port, () => {
-  console.log(`Server is running on ${port}.`)
+http.listen(port, () => {
+  console.log(`Server is running on port:${port}.`)
 });
 
 
