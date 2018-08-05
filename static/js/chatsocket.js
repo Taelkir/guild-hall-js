@@ -7,6 +7,9 @@ $(function () {
       $('#messageInput').val('');
       return false;
     });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
   });
 
 // TODO: This was refreshing the page for some reason instead of actually emitting the message

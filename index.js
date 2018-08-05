@@ -46,8 +46,8 @@ io.on('connection', function(socket){
   // Message handling
   socket.on("chat message", (msg) => {
     console.log(`Message: ${msg}`)
-  })
-
+    io.emit("chat message", msg);
+  });
 });
 
 // Load up the server
