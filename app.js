@@ -5,6 +5,8 @@ const http = require('http').Server(app);
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const io = require("socket.io")(http);
+const mongoose = require("mongoose");
+const session = require('express-session')
 
 // Variables
 const port = process.env.PORT || 3000;
@@ -14,6 +16,13 @@ app.use(cookieParser());
 app.use(express.static('static'))
 
 app.set('view engine', 'pug');
+
+// MongoDB connection
+mongoose.connect("mongodb://localhost:27017/bookworm");
+var db = mongoose.connection;
+// mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+
 
 // GET homepage
 app.get('/', (req, res) => {
