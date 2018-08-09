@@ -10,6 +10,7 @@ const session = require('express-session')
 
 // Variables
 const port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/guildhall";
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -18,7 +19,7 @@ app.use(express.static('static'))
 app.set('view engine', 'pug');
 
 // MongoDB connection
-mongoose.connect("mongodb://localhost:27017/bookworm");
+mongoose.connect(mongoURI);
 var db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
