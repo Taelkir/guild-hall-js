@@ -14,38 +14,15 @@ const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/guildhall
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static('static'))
+app.use(express.static('public'))
 
 app.set('view engine', 'pug');
 
 // MongoDB connection
-mongoose.connect(mongoURI);
+mongoose.connect(mongoURI, { useNewUrlParser: true });
 var db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
-
-
-// GET homepage
-app.get('/', (req, res) => {
-  res.render("login");
-});
-
-// POST login from homepage
-app.post('/', (req, res) => {
-  res.cookie("character", req.body.character);
-  return res.redirect("/chat");
-});
-
-// GET chat page
-app.get('/chat', (req, res) => {
-  if (req.cookies.character) {
-    const locals = { "character": req.cookies.character };
-    // socket.io conenction
-    return res.render("app", locals);
-  } else {
-    return res.redirect("/");
-  }
-});
 
 io.on('connection', function(socket){
   // Connect / Disconnect logs
@@ -60,11 +37,30 @@ io.on('connection', function(socket){
   });
 });
 
+// include routes
+var routes = require('./routes/index');
+app.use('/', routes);
+
+// 404 handler
+app.use(function(req, res, next) {
+  var err = new Error('File Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handler, needs to be last
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err
+  });
+});
+
 // Load up the server
 http.listen(port, () => {
   console.log(`Server is running on port:${port}.`)
 });
-
 
 /* Notes / TODO
 **
@@ -73,8 +69,6 @@ http.listen(port, () => {
 ** Create characters
 **  Store name in database
 **  Store url to icon in database
-** https://socket.io/get-started/chat/ socket probably a good package for then showing it to other users
 **
-** Cannibalise this? https://socket.io/get-started/chat/
 **
 */

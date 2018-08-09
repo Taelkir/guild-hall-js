@@ -18,34 +18,34 @@ gulp.task('css', function () {
 		"maxLineLen": 9999,
 		"uglyComments": true
 	}))
-	.pipe(gulp.dest('./static/css'));
+	.pipe(gulp.dest('./public/css'));
 });
 
 gulp.task('browser-sync', ['nodemon', "sass"/*, "css"*/], function() {
 	browserSync.init(null, {
 		proxy: "http://localhost:3000",
-    files: ["./static/css/style.css", "./views/**/*.pug", "./javascript/*.js"],
+    files: ["./public/stylesheets/style.css", "./views/**/*.pug", "./public/js/*.js"],
     browser: "firefox",
     port: 7000,
 	});
-  gulp.watch("./static/css/*.*", ['sass']);
+  gulp.watch("./public/stylesheets/*.*", ['sass']);
 	// gulp.watch("./public/stylesheets/main.css", ['css']);
 
 });
 
 gulp.task('sass', function () {
-  return gulp.src('./static/css/*.scss')
+  return gulp.src('./public/stylesheets/*.scss')
 		.pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
 		.pipe(sourcemaps.write())
-    .pipe(gulp.dest('./static/css'))
+    .pipe(gulp.dest('./public/stylesheets'))
 		.pipe(browserSync.stream());
 });
 
 gulp.task('nodemon', function (cb) {
 	var started = false;
 	return nodemon({
-		script: 'index.js'
+		script: 'app.js'
 	}).on('start', function () {
 		if (!started) {
 			cb();

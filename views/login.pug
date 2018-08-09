@@ -6,6 +6,9 @@ block content
     h2 Welcome, roleplayer!
     div 
       form(action="/", method="post")
-        label Please enter character name:
-          input(type="text", name="character", autocomplete="off")
-          button(type="submit") Submit
+        legend Sign up a new character or log into an existing one
+        label(for="character") Please enter character name: 
+        input(type="text", name="character", id="character" autocomplete="off")
+        label(for="password") Please enter password: 
+        input(type="password", name="password", id="password")
+        button(type="submit") Submit

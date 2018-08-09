@@ -1,0 +1,39 @@
+// Sticky footer
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  width: 80%;
+  margin: auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  label {
+    margin: 5px;
+  }
+  input {
+    width: 20%;
+  }
+  legend {
+    font-size: 1.2em;
+    margin: 5px;
+  }
+  button {
+    width: 20%;
+    margin-top: 10px;
+  }
+}
