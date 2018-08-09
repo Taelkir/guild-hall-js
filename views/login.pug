@@ -4,11 +4,22 @@ block content
   
   main
     h2 Welcome, roleplayer!
-    div 
+    if locals.message
+      p= message
+    div.forms 
       form(action="/", method="post")
-        legend Sign up a new character or log into an existing one
+        legend Log into an existing charcter
         label(for="character") Please enter character name: 
         input(type="text", name="character", id="character" autocomplete="off")
-        label(for="password") Please enter password: 
-        input(type="password", name="password", id="password")
+        label(for="loginPassword") Please enter password: 
+        input(type="password", name="loginPassword", id="loginPassword")
+        button(type="submit") Submit
+      form(action="/new-character", method="post")
+        legend Make a new character
+        label(for="newCharacter") Please enter character name: 
+        input(type="text", name="newCharacter", id="newCharacter" autocomplete="off")
+        label(for="newPassword") Please enter password: 
+        input(type="password", name="newPassword", id="newPassword")
+        label(for="confirmPassword") Enter that password again: 
+        input(type="password", name="confirmPassword", id="confirmPassword")
         button(type="submit") Submit

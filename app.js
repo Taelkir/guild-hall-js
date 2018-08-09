@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const io = require("socket.io")(http);
 const mongoose = require("mongoose");
-const session = require('express-session')
+const session = require('express-session');
 
 // Variables
 const port = process.env.PORT || 3000;
@@ -23,7 +23,11 @@ mongoose.connect(mongoURI, { useNewUrlParser: true });
 var db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+  console.log("Successfully connected to mongoose");
+});
 
+// Socket.io
 io.on('connection', function(socket){
   // Connect / Disconnect logs
   console.log('a user connected');

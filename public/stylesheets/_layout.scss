@@ -19,21 +19,29 @@ footer {
   flex-shrink: 0;
 }
 
-form {
+.forms {
   display: flex;
-  flex-direction: column;
-  label {
-    margin: 5px;
-  }
-  input {
-    width: 20%;
-  }
-  legend {
-    font-size: 1.2em;
-    margin: 5px;
-  }
-  button {
-    width: 20%;
-    margin-top: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.forms{
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    label {
+      margin: 5px;
+    }
+    input {
+      width: 40%;
+    }
+    legend {
+      font-size: 1.2em;
+      margin: 5px;
+    }
+    button {
+      width: 40%;
+      margin-top: 10px;
+    }
   }
 }
