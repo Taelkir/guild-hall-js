@@ -12,9 +12,6 @@ const session = require('express-session');
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/guildhall";
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(express.static('public'))
 
 app.set('view engine', 'pug');
 
@@ -40,6 +37,11 @@ io.on('connection', function(socket){
     io.emit("chat message", msg);
   });
 });
+
+// Middleware
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.static('public'))
 
 // include routes
 var routes = require('./routes/index');

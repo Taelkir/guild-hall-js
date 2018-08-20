@@ -46,58 +46,49 @@ router.get('/chat', (req, res) => {
 
 // POST /new-character
 router.post("/new-character", (req, res, next) => {
-  // Does the character already exist?
-  User.characterCheck(req.body.character, function(error, user){
-    if (error){
-      return next(error);
-    } else if (user) {
-      console.log("Found character")
-      var err = new Error("That character name already exists. You can log in if you know the password.");
-      err.status = 401;
+  // Check we got all the inputs
+  if (req.body.newCharacter && req.body.newPassword && req.body.confirmPassword) {
+    console.log("Yep, got all three inputs")
+    // confirm that user typed same password twice
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      var err = new Error('Passwords do not match.');
+      err.status = 400;
       return next(err);
-    } else if (!user) {
-      console.log("Didn't find character");
     }
-  });
-  // put those bad boys in the db
-  if (req.body.newCharacter &&
-    req.body.newPassword &&
-    req.body.confirmPassword) {
-      console.log("Yep, got all three inputs")
-      // confirm that user typed same password twice
-      if (req.body.newPassword !== req.body.confirmPassword) {
-        var err = new Error('Passwords do not match.');
-        err.status = 400;
+    // Does the character already exist?
+    User.characterCheck(req.body.newCharacter, function(error, user){
+      // First check for errors
+      if (error){
+        return next(error);
+      } else if (user) {
+        // Then check to see if a character was found in the database with that name
+        var err = new Error("That character name already exists. You can log in if you know the password.");
+        err.status = 401;
         return next(err);
+      } else if (!user) {
+        console.log("Didn't find character");
+        // And proceed to create a new character!
+        // create object with form input
+        const userData = {
+          character: req.body.newCharacter,
+          password: req.body.newPassword,
+        };
+        // use schema's `create` method to insert document into Mongo
+        const user = new User(userData);
+        user.save(function (error, user) {
+          if (error) {
+            return next(error);
+          } else {
+            // redirect so they can log in
+            res.cookie("created", true);
+            console.log("New character created. Username and password sent to mongoose and redirecting")
+            return res.redirect("/");
+          }
+        });
       }
-      console.log("Yep, passwords matched");
+    });
 
-      // create object with form input
-      console.log(`
-        character: ${req.body.newCharacter},
-        password: ${req.body.newPassword},
-
-        `);
-
-      var userData = {
-        character: req.body.newCharacter,
-        password: req.body.newPassword,
-      };
-
-      // use schema's `create` method to insert document into Mongo
-      var user = new User(userData);
-      user.save(function (error, user) {
-        if (error) {
-          return next(error);
-        } else {
-          // redirect so they can log in
-          res.cookie("created", true);
-          console.log("Yep, details sent to mongoose and redirecting")
-          return res.redirect("/");
-        }
-      });
-
-    } else {
+  } else {
       var err = new Error('All fields required.');
       err.status = 400;
       return next(err);
