@@ -1,6 +1,6 @@
 {
   "name": "guild-hall",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "rp chat",
   "main": "app.js",
   "scripts": {
