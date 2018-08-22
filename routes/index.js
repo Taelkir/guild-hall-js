@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
+const session = require('express-session');
+
 
 // GET homepage
 router.get('/', (req, res) => {
@@ -22,6 +24,7 @@ router.post('/', (req, res, next) => {
       }  else {
         // req.session.userId = user._id;
         res.cookie("character", req.body.character);
+        req.session.character = req.body.character;
         return res.redirect("/chat");
       }
     });
@@ -37,6 +40,7 @@ router.post('/', (req, res, next) => {
 router.get('/chat', (req, res) => {
   if (req.cookies.character) {
     const locals = { "character": req.cookies.character };
+    console.log(`${req.session.character} is connecting...`)
     // socket.io conenction happens on this page from app.js
     return res.render("app", locals);
   } else {
