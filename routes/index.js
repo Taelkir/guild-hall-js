@@ -33,7 +33,7 @@ router.post('/', (req, res, next) => {
 
 });
 
-// GET chat page
+// GET /chat
 router.get('/chat', (req, res) => {
   if (req.cookies.character) {
     const locals = { "character": req.cookies.character };
