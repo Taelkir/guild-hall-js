@@ -5,6 +5,7 @@ Still to do:
 - Responsive chat screen css
 - Add name and character img to messages sent in chat
 - Store chat in DB and display last ten messages when logging in
+- Add "rooms", for different chats
 - Page to view all previous chat
 - Dedicated New Character page rather than two forms on one page
 - Add email address to new characters
