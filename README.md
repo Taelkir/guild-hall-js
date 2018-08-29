@@ -6,6 +6,9 @@ Still to do:
 - Add name and character img to messages sent in chat
 - Store chat in DB and display last ten messages when logging in
 - Add "rooms", for different chats
+- - New DB collection for rooms with socket.io namespace details
+- - Go to a /rooms route that makes database calls to populate the page with a list of user created rooms
+- - Navigating to /rooms/:id will connect to that namespace 
 - Page to view all previous chat
 - Dedicated New Character page rather than two forms on one page
 - Add email address to new characters
