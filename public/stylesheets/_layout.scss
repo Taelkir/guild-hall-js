@@ -45,3 +45,7 @@ footer {
     }
   }
 }
+#messages {
+  max-height: 250px;
+  overflow-y: scroll;
+}

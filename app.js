@@ -12,8 +12,20 @@ const session = require('express-session');
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/guildhall";
 
-
+// Pug View engine
 app.set('view engine', 'pug');
+
+// Session
+app.use(session(
+  {
+    secret:"this is secret",
+    cookie: {
+      maxAge: 60000,
+    },
+    resave: false,
+    saveUninitialized: false
+  }
+))
 
 // MongoDB connection
 mongoose.connect(mongoURI, { useNewUrlParser: true });
@@ -27,7 +39,7 @@ db.once('open', function(){
 // Socket.io
 io.on('connection', function(socket){
   // Connect / Disconnect logs
-  console.log('a user connected');
+  console.log(`... and they connected. Their id is ${socket.id}`);
   socket.on("disconnect", function(){
     console.log("user disconnected");
   });
