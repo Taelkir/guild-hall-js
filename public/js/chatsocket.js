@@ -1,17 +1,43 @@
 const socket = io();
 
+;(function () {
 
-// TODO: Kill the jQuery
-$(function () {
-    $('form.socket').submit(function(){
-      socket.emit('chat message', `${getCookie("character")} said: ${$('#messageInput').val()}`);
-      $('#messageInput').val('');
-      return false;
-    });
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-  });
+  const chatForm = document.querySelector("form.socket");
+  const chatSendButton = document.querySelector("button.socket");
+  const chatInput = document.querySelector("input.socket");
+  const messageList = document.querySelector("#messages");
+
+  function chatMessage(event) {
+    event.preventDefault();
+    if (chatInput.value) {
+      // Send the message off to the socket, if there is a message
+      socket.emit("chat message", `${getCookie("character")} said: ${chatInput.value}`);
+
+      // Clear the input, put the cursor there, scroll down to the new message
+      chatInput.value = "";
+      chatInput.focus();
+    }
+  }
+
+  function receiveChatMessage(message) {
+    // Called when the socket notices a new message
+
+    // Build the element for the message
+    let newMessageElement = document.createElement("li");
+    let newMessageText = document.createTextNode(message);
+
+    // Pack the new element onto the page
+    newMessageElement.appendChild(newMessageText);
+    messageList.appendChild(newMessageElement);
+
+    // Scroll to show the message (needs to be improved because new messages prevent users from scrolling up and viewing the history of the chat)
+    messageList.scrollTop = messageList.scrollHeight;
+  }
+
+  chatForm.addEventListener("submit", chatMessage);
+  socket.on("chat message", receiveChatMessage);
+
+})();
 
 function getCookie(cookieName) {
   let i, x, y, allCookies = document.cookie.split(";");
@@ -24,15 +50,3 @@ function getCookie(cookieName) {
     }
   }
 }
-// TODO: This was refreshing the page for some reason instead of actually emitting the message
-// const chatForm = document.querySelector("form.socket");
-// const chatSendButton = document.querySelector("button.socket");
-// const chatInput = document.querySelector("input.socket");
-//
-// function chatMessage() {
-//   socket.emit("chat message", chatInput.value);
-//   chatInput.value = "";
-//   return false;
-// }
-//
-// chatForm.addEventListener("submit", chatMessage);

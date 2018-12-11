@@ -6,10 +6,9 @@ block content
     h2 Hello, #{locals.character}!
     div 
       ul(id="messages")
-        form.socket(action="")
-          input.socket(id="messageInput" autocomplete="off")
-          button.socket Send
+      form.socket(action="")
+        input.socket(id="messageInput" autocomplete="off")
+        button.socket Send
   script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js")
-  script(src="https://code.jquery.com/jquery-1.11.1.js")
   script(src="js/chatsocket.js")
           
